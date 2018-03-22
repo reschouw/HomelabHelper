@@ -6,14 +6,21 @@
 
 import configparser
 
-def createConfig():
+def createExConfig():
     """Creates example config file"""
-    print('No existing config file. Creating example.')
-    config['test'] = {'Active' : 'yes'}
-    config['test2'] = {'Active' : 'yes'}
-    with open('example.cfg', 'w') as configfile:
+    config['Module1'] = {'Active' : 'yes'}
+    config['Module2'] = {'Active' : 'yes'}
+    with open('exampleconfig', 'w') as configfile:
         config.write(configfile)
-    print('Please rename the example.cfg file to helper.cfg after reviewing settings')
+    print('Please rename the \'exampleconfig\' file to \'config\' after reviewing settings')
+
+def createExHosts():
+    """Creates example hosts file"""
+    config['host1'] = {'Active' : 'yes'}
+    config['host2'] = {'Active' : 'yes'}
+    with open('examplehosts', 'w') as hostsfile:
+        config.write(hostsfile)
+    print('Please rename the \'examplehosts\' file to \'hosts\' after reviewing settings')
 
     
 
@@ -21,14 +28,28 @@ def createConfig():
 print("Homelab Helper starting...")
 
 config = configparser.ConfigParser()
+hosts = configparser.ConfigParser()
 
-config.read('helper.cfg')
-if not config.sections():
-    createConfig()
+config.read('config')
+hosts.read('hosts')
+
+if not config.sections() and not hosts.sections():
+    print('Cannot find configuration files. Creating examples.')
+    createExConfig()
+    createExHosts()
+    exit()
+elif not config.sections():
+    print('Cannot find config file. Creating example.')
+    createExConfig()
+    exit()
+elif not hosts.sections():
+    print('Cannot find hosts file. Creating example.')
+    createExHosts()
     exit()
 
-if config['test'].getboolean('Active'):
-    print('Test')
 
-if config['test2'].getboolean('Active'):
-    print('Test2')
+if config['Module1'].getboolean('Active'):
+    print('Module 1 active')
+
+if hosts['host2'].getboolean('Active'):
+    print('Host 2 active')
