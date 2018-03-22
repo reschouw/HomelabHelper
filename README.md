@@ -12,3 +12,4 @@ The general idea is to have a low-power device (A Raspberry Pi perhaps?) inside 
 - [ ] Configuration files
 - [ ] Wol Relay
 - [ ] Ping Module
+- [ ] Run as Daemon
