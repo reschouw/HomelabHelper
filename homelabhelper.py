@@ -8,16 +8,14 @@ import configparser
 
 def createExConfig():
     """Creates example config file"""
-    config['Module1'] = {'Active' : 'yes'}
-    config['Module2'] = {'Active' : 'yes'}
+    #config['Module1'] = {'Active' : 'yes'}
     with open('exampleconfig', 'w') as configfile:
         config.write(configfile)
     print('Please rename the \'exampleconfig\' file to \'config\' after reviewing settings')
 
 def createExHosts():
     """Creates example hosts file"""
-    config['host1'] = {'Active' : 'yes'}
-    config['host2'] = {'Active' : 'yes'}
+    #config['host1'] = {'Active' : 'yes'}
     with open('examplehosts', 'w') as hostsfile:
         config.write(hostsfile)
     print('Please rename the \'examplehosts\' file to \'hosts\' after reviewing settings')
@@ -46,10 +44,3 @@ elif not hosts.sections():
     print('Cannot find hosts file. Creating example.')
     createExHosts()
     exit()
-
-
-if config['Module1'].getboolean('Active'):
-    print('Module 1 active')
-
-if hosts['host2'].getboolean('Active'):
-    print('Host 2 active')
