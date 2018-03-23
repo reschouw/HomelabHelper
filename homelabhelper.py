@@ -8,6 +8,7 @@ import time
 import re
 import configparser
 from slackclient import SlackClient
+from wakeonlan import send_magic_packet
 
 
 def createExConfig():
