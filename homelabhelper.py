@@ -13,8 +13,9 @@ from slackclient import SlackClient
 def createExConfig():
     """Creates example config file"""
     #config['Module1'] = {'Active' : 'yes'}
-    config['Slack Integration'] = {'#bot_token' : '',
-                                   'refresh_rate' : '1'}
+    config['Slack Integration'] = {'require_mention' : 'yes',
+                                   'refresh_rate' : '1',
+                                   '#bot_token' : ''}
     with open('exampleconfig', 'w') as configfile:
         config.write(configfile)
     print('Please rename the \'exampleconfig\' file to \'config\' after reviewing settings')
@@ -26,7 +27,7 @@ def createExHosts():
         config.write(hostsfile)
     print('Please rename the \'examplehosts\' file to \'hosts\' after reviewing settings')
 
-def parse_bot_commands(slack_events):
+def parse_bot_commands(slack_events, require_mention):
     """
         Parses a list of events coming from the Slack RTM API to find bot commands.
         If a bot command is found, this function returns a tuple of command and channel.
@@ -34,10 +35,16 @@ def parse_bot_commands(slack_events):
     """
     for event in slack_events:
         if event['type'] == 'message':
-            user_id, message = parse_direct_mention(event['text'])
-            if user_id == bot_id:
-                return message, event['channel']
+            if require_mention:
+                user_id, message = parse_direct_mention(event['text'])
+                if user_id == bot_id:
+                    return message, event['channel']
+            else:
+                #Prevent bot responding to it's own messages
+                if 'user' in event and event['user'] != bot_id:
+                    return event['text'], event['channel']
     return None, None
+            
 
 def parse_direct_mention(message_text):
     """
@@ -99,6 +106,9 @@ if __name__ == "__main__":
         refresh_rate = config['Slack Integration'].getfloat('refresh_rate')
         if not refresh_rate:
             raise TypeError('Invalid refresh_rate value', refresh_rate)
+        require_mention = config['Slack Integration'].getboolean('require_mention')
+        if require_mention is None:
+            raise TypeError('Invalid require_mention value', require_mention)
     except TypeError as err:
         print (err.args)
         exit(1)
@@ -115,7 +125,7 @@ if __name__ == "__main__":
         # Read bot's user ID by calling Web API method `auth.test`
         bot_id = slack_client.api_call("auth.test")["user_id"]
         while True:
-            command, channel = parse_bot_commands(slack_client.rtm_read())
+            command, channel = parse_bot_commands(slack_client.rtm_read(), require_mention)
             if command:
                 handle_command(command, channel)
             time.sleep(refresh_rate)
