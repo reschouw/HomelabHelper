@@ -42,7 +42,7 @@ def parse_direct_mention(message_text):
         Finds a direct mention (a mention that is at the beginning) in message text
         and returns the user ID which was mentioned. If there is no direct mention, returns None
     """
-    matches = re.search(MENTION_REGEX, message_text)
+    matches = re.search("^<@(|[WU].+?)>(.*)", message_text)
     # the first group contains the username, the second group contains the remaining message
     return (matches.group(1), matches.group(2).strip()) if matches else (None, None)
 
@@ -51,13 +51,14 @@ def handle_command(command, channel):
         Executes bot command if the command is known
     """
     # Default response is help text for the user
-    default_response = "Not sure what you mean. Try *{}*.".format(EXAMPLE_COMMAND)
+    default_response = "Not sure what you mean. Try *{}*.".format('help')
 
     # Finds and executes the given command, filling in response
     response = None
     # This is where you start to implement more commands!
-    if command.startswith(EXAMPLE_COMMAND):
-        response = "Sure...write some more code then I can do that!"
+    if command.startswith('help'):
+        response = "List of available commands:\n" + \
+                   "    - help: list available commands"
 
     # Sends the response back to the channel
     slack_client.api_call(
@@ -96,9 +97,6 @@ if __name__ == "__main__":
     if 'bot_token' in config['Slack Integration']:
         slack_client = SlackClient(config['Slack Integration']['bot_token'])
         bot_id = None
-        EXAMPLE_COMMAND = 'help'
-        MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
-        RTM_READ_DELAY = 1
         if slack_client.rtm_connect(with_team_state=False):
             print("Starter Bot connected and running!")
             # Read bot's user ID by calling Web API method `auth.test`
@@ -106,10 +104,10 @@ if __name__ == "__main__":
             while True:
                 command, channel = parse_bot_commands(slack_client.rtm_read())
                 if command:
-                    print('No commands')
                     handle_command(command, channel)
-                time.sleep(RTM_READ_DELAY)
+                time.sleep(1)
         else:
             print("Connection failed. Exception traceback printed above.")
     else:
         print('\'bot_token\' not found!')
+        exit()
