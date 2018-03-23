@@ -98,7 +98,7 @@ if __name__ == "__main__":
     try:
         refresh_rate = config['Slack Integration'].getfloat('refresh_rate')
         if not refresh_rate:
-            raise TypeError('Invalid refresh_rate value')
+            raise TypeError('Invalid refresh_rate value', refresh_rate)
     except TypeError as err:
         print (err.args)
         exit(1)
