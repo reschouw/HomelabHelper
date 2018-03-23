@@ -3,6 +3,7 @@
 # A modular homelab helper
 # https://github.com/reschouw/HomelabHelper
 
+import os
 import time
 import re
 import configparser
@@ -12,7 +13,8 @@ from slackclient import SlackClient
 def createExConfig():
     """Creates example config file"""
     #config['Module1'] = {'Active' : 'yes'}
-    config['Slack Integration'] = {'#bot_token' : ''}
+    config['Slack Integration'] = {'#bot_token' : '',
+                                   'refresh_rate' : '1'}
     with open('exampleconfig', 'w') as configfile:
         config.write(configfile)
     print('Please rename the \'exampleconfig\' file to \'config\' after reviewing settings')
@@ -82,32 +84,47 @@ if __name__ == "__main__":
         print('Cannot find configuration files. Creating examples.')
         createExConfig()
         createExHosts()
-        exit()
+        exit(0)
     elif not config.sections():
         print('Cannot find config file. Creating example.')
         createExConfig()
-        exit()
+        exit(0)
     elif not hosts.sections():
         print('Cannot find hosts file. Creating example.')
         createExHosts()
-        exit()
-
+        exit(0)
+    
+    #Read in important config values
+    try:
+        refresh_rate = config['Slack Integration'].getfloat('refresh_rate')
+        if not refresh_rate:
+            raise TypeError('Invalid refresh_rate value')
+    except TypeError as err:
+        print (err.args)
+        exit(1)
+            
     #Connect to Slack and start bot
     #Credit to Matt Makai @fullstackpython for starter code
     if 'bot_token' in config['Slack Integration']:
         slack_client = SlackClient(config['Slack Integration']['bot_token'])
-        bot_id = None
-        if slack_client.rtm_connect(with_team_state=False):
-            print("Starter Bot connected and running!")
-            # Read bot's user ID by calling Web API method `auth.test`
-            bot_id = slack_client.api_call("auth.test")["user_id"]
-            while True:
-                command, channel = parse_bot_commands(slack_client.rtm_read())
-                if command:
-                    handle_command(command, channel)
-                time.sleep(1)
-        else:
-            print("Connection failed. Exception traceback printed above.")
     else:
-        print('\'bot_token\' not found!')
-        exit()
+        slack_client = SlackClient(os.environ.get('SLACK_BOT_TOKEN'))
+    bot_id = None
+    if slack_client.rtm_connect(with_team_state=False):
+        print("Homelab Helper Bot connected and running!")
+        # Read bot's user ID by calling Web API method `auth.test`
+        bot_id = slack_client.api_call("auth.test")["user_id"]
+        while True:
+            command, channel = parse_bot_commands(slack_client.rtm_read())
+            if command:
+                handle_command(command, channel)
+            time.sleep(refresh_rate)
+    else:
+        print("Connection failed. Exception traceback printed above.")
+        
+        
+        
+        
+        
+        
+        
