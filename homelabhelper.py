@@ -11,7 +11,7 @@ from slackclient import SlackClient
 from wakeonlan import send_magic_packet
 
 
-def createExConfig():
+def createExConfig(config):
     """Creates example config file"""
     #config['Module1'] = {'Active' : 'yes'}
     config['Slack Integration'] = {'require_mention' : 'yes',
@@ -21,11 +21,11 @@ def createExConfig():
         config.write(configfile)
     print('Please rename the \'exampleconfig\' file to \'config\' after reviewing settings')
 
-def createExHosts():
+def createExHosts(hosts):
     """Creates example hosts file"""
-    #config['Host1'] = {'Active' : 'yes'}
+    hosts['Example_Host_Entry'] = {'mac_address' : 'ff:ff:ff:ff:ff:ff'}
     with open('examplehosts', 'w') as hostsfile:
-        config.write(hostsfile)
+        hosts.write(hostsfile)
     print('Please rename the \'examplehosts\' file to \'hosts\' after reviewing settings')
 
 def parse_bot_commands(slack_events, require_mention):
@@ -69,6 +69,11 @@ def handle_command(command, channel):
     if command.startswith('help'):
         response = "List of available commands:\n" + \
                    "    - help: list available commands"
+    elif command.startswith('wol'):
+        for host in hosts.sections():
+            send_magic_packet(hosts[host]['mac_address'])
+            print('wol:', hosts[host]['mac_address'])
+        response = "Sent!"
 
     # Sends the response back to the channel
     slack_client.api_call(
@@ -90,16 +95,16 @@ if __name__ == "__main__":
 
     if not config.sections() and not hosts.sections():
         print('Cannot find configuration files. Creating examples.')
-        createExConfig()
-        createExHosts()
+        createExConfig(config)
+        createExHosts(hosts)
         exit(0)
     elif not config.sections():
         print('Cannot find config file. Creating example.')
-        createExConfig()
+        createExConfig(config)
         exit(0)
     elif not hosts.sections():
         print('Cannot find hosts file. Creating example.')
-        createExHosts()
+        createExHosts(hosts)
         exit(0)
     
     #Read in important config values
