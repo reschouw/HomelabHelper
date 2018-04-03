@@ -126,7 +126,7 @@ if __name__ == "__main__":
     else:
         slack_client = SlackClient(os.environ.get('SLACK_BOT_TOKEN'))
     bot_id = None
-    if slack_client.rtm_connect(with_team_state=False):
+    if slack_client.rtm_connect(with_team_state=False, auto_reconnect=True):
         print("Homelab Helper Bot connected and running!")
         # Read bot's user ID by calling Web API method `auth.test`
         bot_id = slack_client.api_call("auth.test")["user_id"]
