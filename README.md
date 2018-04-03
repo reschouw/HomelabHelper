@@ -8,8 +8,12 @@ The general idea is to have a low-power device (A Raspberry Pi perhaps?) inside 
 
 
 #### Major planned features:
-- [ ] Slack integration
+- [X] Slack integration
 - [X] Configuration files
-- [ ] Wol Relay
+- [ ] Wol Module
 - [ ] Ping Module
-- [ ] Run as Daemon
+- [ ] Run as Daemon or system service
+
+#### Possible additional features
+- [ ] SNMP Query Module (if feasible)
+
