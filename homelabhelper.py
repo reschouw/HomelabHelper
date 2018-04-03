@@ -5,11 +5,9 @@
 
 import os
 import time
-import re
 import configparser
 
 from slackint import Slack_Bot
-
 
 def createExConfig(config):
     """Creates example config file"""
@@ -75,10 +73,12 @@ if __name__ == "__main__":
                                              require_mention,
                                              hosts)
     if slack_bot.connect():
+        print("Homelab Helper Bot connected and running!")
         while True:
             slack_bot.read_command()
             time.sleep(refresh_rate)
     else:
+        print("Connection failed. Exception traceback printed above.")
         exit(1)
         
         

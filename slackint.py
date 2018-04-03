@@ -5,6 +5,7 @@
 # A modular homelab helper
 # https://github.com/reschouw/HomelabHelper
 
+import re
 from slackclient import SlackClient
 from wakeonlan import send_magic_packet
 
@@ -28,12 +29,10 @@ class Slack_Bot:
         """
         if self.slack_client.rtm_connect(with_team_state=False,
                                          auto_reconnect=True):
-            print("Homelab Helper Bot connected and running!")
             # Read bot's user ID by calling Web API method `auth.test`
             self.bot_id = self.slack_client.api_call("auth.test")["user_id"]
             return True
         else:
-            print("Connection failed. Exception traceback printed above.")
             return False
     
     def read_command(self):
