@@ -7,7 +7,8 @@
 
 import re
 from slackclient import SlackClient
-from wakeonlan import send_magic_packet
+
+from commands import *
 
 
 
@@ -80,15 +81,9 @@ class Slack_Bot:
         # Finds and executes the given command, filling in response
         response = None
         if command.startswith('help'):
-            #Print available options or more info about an option
-            response = "List of available commands:\n" + \
-                       "    - help: list available commands"
+           response = help(command)
         elif command.startswith('wol'):
-            #
-            for host in self.hosts.sections():
-                send_magic_packet(self.hosts[host]['mac_address'])
-                print('wol:', self.hosts[host]['mac_address'])
-            response = "Sent!"
+            response = wol(command, self.hosts)
 
         # Sends the response back to the channel
         self.slack_client.api_call(
