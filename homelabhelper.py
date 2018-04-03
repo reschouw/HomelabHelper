@@ -15,7 +15,7 @@ def createExConfig(config):
     """Creates example config file"""
     #config['Module1'] = {'Active' : 'yes'}
     config['Slack Integration'] = {'require_mention' : 'yes',
-                                   'refresh_rate' : '1',
+                                   'refresh_rate' : '0.3',
                                    '#bot_token' : ''}
     with open('exampleconfig', 'w') as configfile:
         config.write(configfile)
