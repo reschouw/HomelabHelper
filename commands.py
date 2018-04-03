@@ -16,9 +16,28 @@ def help(command):
            
 def wol(command, hosts): 
     """
-        Wake specified host or all hosts if no host specified
+        Wake specified host(s)
     """
-    for host in hosts.sections():
-        send_magic_packet(hosts[host]['mac_address'])
-        print('wol:', hosts[host]['mac_address'])
-    return "Sent!"
+    command = command.split(" ")
+    if len(command) > 1:
+        #Valid usage
+        if command[1] == "all":
+            #Wake all hosts
+            for host in hosts.sections():
+                send_magic_packet(hosts[host]['mac_address'])
+                print('wol:', hosts[host]['mac_address'])
+        else:
+            #Wake specified hosts
+            for i in range (1, len(command)):
+                try:
+                    send_magic_packet(hosts[command[i]]["mac_address"])
+                    print('wol:', hosts[command[i]]['mac_address'])
+                except KeyError:
+                    return "Unknown host: " + command[i] + \
+                           ". Hostnames are case-sensitive"
+
+        return "Sent!"
+    else:
+        #Invalid usage
+        return "No host specified. use \'wol all\' to wake all hosts."
+    
