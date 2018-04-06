@@ -57,6 +57,7 @@ def ping(command, hosts):
                 print("Host up!")
             else:
                 print("Host down!")
+        return "Pinged"
     else:
         #Invalid usage
         return "No host specified. Us \'ping all\' to ping all hosts"
