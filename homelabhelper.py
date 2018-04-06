@@ -56,11 +56,12 @@ if __name__ == "__main__":
         refresh_rate = config['Slack Integration'].getfloat('refresh_rate')
         if not refresh_rate:
             raise TypeError('Invalid refresh_rate value', refresh_rate)
-        require_mention = config['Slack Integration'].getboolean('require_mention')
+        require_mention = config['Slack Integration']\
+                                 .getboolean('require_mention')
         if require_mention is None:
             raise TypeError('Invalid require_mention value', require_mention)
     except TypeError as err:
-        print (err.args)
+        print(err.args)
         exit(1)
             
     #Connect to Slack, start, and run bot
