@@ -82,9 +82,11 @@ class Slack_Bot:
         # Finds and executes the given command, filling in response
         response = None
         if command.startswith('help'):
-           response = help(command)
+            response = help(command)
         elif command.startswith('wol'):
             response = wol(command, self.hosts)
+        elif command.startswith('ping'):
+            response = ping(command, self.hosts)
 
         # Sends the response back to the channel
         self.slack_client.api_call(

@@ -4,6 +4,8 @@
 # A modular homelab helper
 # https://github.com/reschouw/HomelabHelper
 
+import os
+
 from wakeonlan import send_magic_packet
 
 def help(command):
@@ -40,5 +42,21 @@ def wol(command, hosts):
         return "Sent!"
     else:
         #Invalid usage
-        return "No host specified. use \'wol all\' to wake all hosts."
+        return "No host specified. Use \'wol all\' to wake all hosts."
     
+def ping(command, hosts):
+    """
+        Pings specified host(s)
+    """
+    command = command.split(" ")
+    if len(command) > 1:
+        #Valid usage
+        if command[1] == "all":
+            response = os.system("ping -c 1 miniverse.")
+            if response:
+                print("Host up!")
+            else:
+                print("Host down!")
+    else:
+        #Invalid usage
+        return "No host specified. Us \'ping all\' to ping all hosts"
