@@ -53,7 +53,7 @@ def ping(command, hosts):
         #Valid usage
         if command[1] == "all":
             response = os.system("ping -c 1 miniverse.")
-            if response:
+            if response == 0:
                 print("Host up!")
             else:
                 print("Host down!")
