@@ -56,7 +56,7 @@ def ping(command, hosts):
             response = ""
             for host in hosts.sections():
                 hostname = hosts[host]['host_or_ip']
-                pong = os.system("ping -c 1 -q " + hostname + ">/dev/null")
+                pong = os.system("ping -c 1 -q " + hostname + " > /dev/null")
                 print("ping:" + hostname)
                 if pong == 0:
                     print("Host up!")
@@ -69,19 +69,14 @@ def ping(command, hosts):
             response = ""
             for i in range (1, len(command)):
                 hostname = command[i]
-                
-                try:
-                    pong = os.system("ping -c 1 -q " + hostname + ">/dev/null")
-                    print("ping:" + hostname)
-                    if pong == 0:
-                        print("Host up!")
-                        response = response + hostname + ": Host up!\n"
-                    else:
-                        print("Host down!")
-                        response = response + hostname + ": Host down!\n"
-                except KeyError:
-                    return "Unknown host: " + command[i] + \
-                           ". Hostnames are case-sensitive"
+                pong = os.system("ping -c 1 -q " + hostname + " > /dev/null")
+                print("ping:" + hostname)
+                if pong == 0:
+                    print("Host up!")
+                    response = response + hostname + ": Host up!\n"
+                else:
+                    print("Host down!")
+                    response = response + hostname + ": Host down!\n"
         return response + "Task complete!"
     else:
         #Invalid usage
