@@ -11,7 +11,7 @@ The general idea is to have a low-power device (A Raspberry Pi perhaps?) inside 
 - [X] Slack integration
 - [X] Configuration files
 - [X] Wol Module
-- [ ] Ping Module
+- [X] Ping Module
 - [ ] Wake Module
 - [ ] Queue Module
 - [ ] Run as Daemon or system service
