@@ -21,7 +21,8 @@ def createExConfig(config):
 
 def createExHosts(hosts):
     """Creates example hosts file"""
-    hosts['Example_Host_Entry'] = {'mac_address' : 'ff:ff:ff:ff:ff:ff'}
+    hosts['Example_Host_Entry'] = {'host_or_ip' : 'localhost',
+                                   'mac_address' : 'ff:ff:ff:ff:ff:ff'}
     with open('examplehosts', 'w') as hostsfile:
         hosts.write(hostsfile)
     print('Please rename the \'examplehosts\' file to \'hosts\' after reviewing settings')

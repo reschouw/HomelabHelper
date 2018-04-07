@@ -82,7 +82,7 @@ class Slack_Bot:
         # Finds and executes the given command, filling in response
         response = None
         if command.startswith('help'):
-            response = help(command)
+            response = help()
         elif command.startswith('wol'):
             response = wol(command, self.hosts)
         elif command.startswith('ping'):
