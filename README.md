@@ -18,4 +18,5 @@ The general idea is to have a low-power device (A Raspberry Pi perhaps?) inside 
 
 #### Possible additional features
 - [ ] SNMP Query Module (if feasible)
+- [ ] Shutdown Module (if not too dangerous)
 
