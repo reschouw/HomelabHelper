@@ -28,14 +28,18 @@ def wol(command, hosts):
         if command[1] == "all":
             #Wake all hosts
             for host in hosts.sections():
-                send_magic_packet(hosts[host]['mac_address'])
-                print('wol:', hosts[host]['mac_address'])
+                if hosts[host].getboolean('wol_ready'):
+                    send_magic_packet(hosts[host]['mac_address'])
+                    print('wol:', hosts[host]['mac_address'])
         else:
             #Wake specified hosts
             for i in range (1, len(command)):
                 try:
-                    send_magic_packet(hosts[command[i]]["mac_address"])
-                    print('wol:', hosts[command[i]]['mac_address'])
+                    if hosts[command[i]].getboolean('wol_ready'):
+                        send_magic_packet(hosts[command[i]]["mac_address"])
+                        print('wol:', hosts[command[i]]['mac_address'])
+                    else:
+                        return "Host " + command[i] + " is not WOL ready"
                 except KeyError:
                     return "Unknown host: " + command[i] + \
                            ". Hostnames are case-sensitive"
