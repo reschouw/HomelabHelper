@@ -5,53 +5,20 @@
 
 import os
 import time
-import configparser
 
 from slackint import Slack_Bot
+from confreader import *
 
-def createExConfig(config):
-    """Creates example config file"""
-    #config['Module1'] = {'Active' : 'yes'}
-    config['Slack Integration'] = {'require_mention' : 'yes',
-                                   'refresh_rate' : '0.3',
-                                   '#bot_token' : ''}
-    with open('exampleconfig', 'w') as configfile:
-        config.write(configfile)
-    print('Please rename the \'exampleconfig\' file to \'config\' after reviewing settings')
 
-def createExHosts(hosts):
-    """Creates example hosts file"""
-    hosts['Example_Host_Entry'] = {'host_or_ip' : 'localhost',
-                                   'mac_address' : 'ff:ff:ff:ff:ff:ff',
-                                   'wol_ready' : 'yes'}
-    with open('examplehosts', 'w') as hostsfile:
-        hosts.write(hostsfile)
-    print('Please rename the \'examplehosts\' file to \'hosts\' after reviewing settings')
 
 # Main entry point
 if __name__ == "__main__":
     print("Homelab Helper starting...")
 
-    #Open config files
-    config = configparser.ConfigParser()
-    hosts = configparser.ConfigParser()
+    #Open and verify config files
+    config, hosts = openconfigs()
 
-    config.read('config')
-    hosts.read('hosts')
-
-    if not config.sections() and not hosts.sections():
-        print('Cannot find configuration files. Creating examples.')
-        createExConfig(config)
-        createExHosts(hosts)
-        exit(0)
-    elif not config.sections():
-        print('Cannot find config file. Creating example.')
-        createExConfig(config)
-        exit(0)
-    elif not hosts.sections():
-        print('Cannot find hosts file. Creating example.')
-        createExHosts(hosts)
-        exit(0)
+    
     
     #Read in important config values
     try:
