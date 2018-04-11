@@ -26,9 +26,30 @@ def createExHosts(hosts):
         hosts.write(hostsfile)
     print('Please rename the \'examplehosts\' file to \'hosts\' after reviewing settings')
 
+def verifyConfigs(config, hosts):
+    
+    #Verify Hosts file
+    print("Verifying hosts file...")
+    for host in hosts.sections():
+        verified = True
+        try:
+            hosts[host]['host_or_ip']
+            hosts[host]['mac_address']
+            hosts[host].getboolean('wol_ready')
+        except KeyError:
+            verified = False
+        except ValueError:
+            verified = False
+        if len(hosts[host]['mac_address']) != 17:
+            verified = False
+        
+        if not verified:
+            print("Error found in " + host + " section of hosts file.")
+            exit(1)
+    print("Verified!")
+        
 
-
-def openconfigs():
+def openConfigs():
     """
         Verifies config files and opens them.
         Missing config files cause examples to be created and the program exited
@@ -39,6 +60,7 @@ def openconfigs():
     config.read('config')
     hosts.read('hosts')
     
+    #Create missing config files and exit
     if not config.sections() and not hosts.sections():
         print('Cannot find configuration files. Creating examples.')
         createExConfig(config)
@@ -52,5 +74,7 @@ def openconfigs():
         print('Cannot find hosts file. Creating example.')
         createExHosts(hosts)
         exit(0)
-        
+    
+    verifyConfigs(config, hosts)
+    
     return config, hosts

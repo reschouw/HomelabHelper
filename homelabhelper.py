@@ -16,10 +16,8 @@ if __name__ == "__main__":
     print("Homelab Helper starting...")
 
     #Open and verify config files
-    config, hosts = openconfigs()
+    config, hosts = openConfigs()
 
-    
-    
     #Read in important config values
     try:
         refresh_rate = config['Slack Integration'].getfloat('refresh_rate')
