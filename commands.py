@@ -24,6 +24,7 @@ def wol(command, hosts):
     """
     command = command.split(" ")
     response = ""
+    success = True
     if len(command) > 1:
         #Valid usage
         if command[1] == "all":
@@ -45,10 +46,17 @@ def wol(command, hosts):
                     else:
                         response = response + "Host " + hostname + \
                                               " is not WOL ready\n"
+                        success = False
                 except KeyError:
-                    response = response + "Unknown host: " + hostname + \
-                           " Hostnames are case-sensitive\n"
-        return response + "Finished sending wake-up packets"
+                    response = response + "Unknown host: '" + hostname + "'\n"
+                    success = False
+        if success :
+            #All hosts woken successfully
+            return response + "Finished sending wake-up packets"
+        else:
+            #Some hosts not wol ready or unknown
+            return response + "Not all hosts wol ready or were not known.\n" + \
+                              "Check your host file or your capitalization"
     else:
         #Invalid usage
         return "No host specified. Use \'wol all\' to wake all hosts."
