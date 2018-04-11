@@ -46,6 +46,22 @@ def verifyConfigs(config, hosts):
         if not verified:
             print("Error found in " + host + " section of hosts file.")
             exit(1)
+       
+    #Verify config file
+    print("Verifying config file...")
+    verified = True
+    try:
+        config['Slack Integration'].getfloat('refresh_rate')
+        config['Slack Integration'].getboolean('require_mention')
+        config['Slack Integration']['bot_token']
+    except KeyError:
+        verified = False
+    except ValueError:
+        verified = False
+    if not verified:
+        print("Error found in Slack Integreaton section of config file.")
+        exit(1)
+    
     print("Verified!")
         
 
