@@ -23,27 +23,32 @@ def wol(command, hosts):
         Wake specified host(s)
     """
     command = command.split(" ")
+    response = ""
     if len(command) > 1:
         #Valid usage
         if command[1] == "all":
             #Wake all hosts
-            for host in hosts.sections():
-                if hosts[host].getboolean('wol_ready'):
-                    send_magic_packet(hosts[host]['mac_address'])
-                    print('wol:', hosts[host]['mac_address'])
+            for hostname in hosts.sections():
+                if hosts[hostname].getboolean('wol_ready'):
+                    send_magic_packet(hosts[hostname]['mac_address'])
+                    print('wol:', hosts[hostname]['mac_address'])
+                    response = response + "Waking " + hostname + "\n"
         else:
             #Wake specified hosts
             for i in range (1, len(command)):
                 try:
-                    if hosts[command[i]].getboolean('wol_ready'):
-                        send_magic_packet(hosts[command[i]]["mac_address"])
-                        print('wol:', hosts[command[i]]['mac_address'])
+                    hostname = command[i]
+                    if hosts[hostname].getboolean('wol_ready'):
+                        send_magic_packet(hosts[hostname]["mac_address"])
+                        print('wol:', hosts[hostname]['mac_address'])
+                        response = response + "Waking " + hostname + "\n"
                     else:
-                        return "Host " + command[i] + " is not WOL ready"
+                        response = response + "Host " + hostname + \
+                                              " is not WOL ready\n"
                 except KeyError:
-                    return "Unknown host: " + command[i] + \
-                           ". Hostnames are case-sensitive"
-        return "Sent!"
+                    response = response + "Unknown host: " + hostname + \
+                           " Hostnames are case-sensitive\n"
+        return response + "Finished sending wake-up packets"
     else:
         #Invalid usage
         return "No host specified. Use \'wol all\' to wake all hosts."
