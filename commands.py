@@ -43,12 +43,12 @@ def wol(command, hosts):
             for hostname in hosts.sections():
                 if hosts[hostname].getboolean('wol_ready'):
                     if isup(hostname):
-                        response = response + "Host " + hostname + \
-                                              " is already up\n"
+                        response = response + "Host \'" + hostname + \
+                                              "\' is already up.\n"
                     else:
                         send_magic_packet(hosts[hostname]['mac_address'])
                         print('wol:', hosts[hostname]['mac_address'])
-                        response = response + "Waking " + hostname + "\n"
+                        response = response + "Waking \'" + hostname + "\'.\n"
         else:
             #Wake specified hosts
             for i in range (1, len(command)):
@@ -57,21 +57,22 @@ def wol(command, hosts):
                     if hosts[hostname].getboolean('wol_ready'):
                         send_magic_packet(hosts[hostname]["mac_address"])
                         print('wol:', hosts[hostname]['mac_address'])
-                        response = response + "Waking " + hostname + "\n"
+                        response = response + "Waking \'" + hostname + "\'.\n"
                     else:
-                        response = response + "Host " + hostname + \
-                                              " is not WOL ready\n"
+                        response = response + "Host \'" + hostname + \
+                                              "\' is not WOL ready.\n"
                         success = False
                 except KeyError:
-                    response = response + "Unknown host: '" + hostname + "'\n"
+                    response = response + "Unknown host: \'" + \
+                                          hostname + "\'.\n"
                     success = False
         if success :
             #All hosts woken successfully
-            return response + "Finished sending wake-up packets"
+            return response + "Task complete."
         else:
             #Some hosts not wol ready or unknown
             return response + "Not all hosts wol ready or were not known.\n" + \
-                              "Check your host file or your capitalization"
+                              "Check your host file or your capitalization."
     else:
         #Invalid usage
         return "No host specified. Use \'wol all\' to wake all hosts."
@@ -89,10 +90,10 @@ def ping(command, hosts):
         print("ping:" + host)
         if pong == 0:
             print("Host up!")
-            return host + ": Host reachable!\n"
+            return host + ": Host reachable.\n"
         else:
             print("Host down!")
-            return host + ": Host not reachable!\n"
+            return host + ": Host not reachable.\n"
             
             
     command = command.split(" ")
@@ -116,13 +117,13 @@ def ping(command, hosts):
                         response = response + doping(target)
                     except KeyError:
                         #Host not in hosts file
-                        response = response + "Host " + host + " not found!\n"
+                        response = response + "Host \'" + host + "\' not found.\n"
         else:
             #Wake specified targets
             for i in range (1, len(command)):
                 target = command[i]
                 response = response + doping(target)
-        return response + "Task complete!"
+        return response + "Task complete."
     else:
         #Invalid usage
         return "No host specified. Use \'ping all\' to ping all hosts or " + \
