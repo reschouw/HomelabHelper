@@ -60,30 +60,52 @@ def wol(command, hosts):
     else:
         #Invalid usage
         return "No host specified. Use \'wol all\' to wake all hosts."
-    
+
 def ping(command, hosts):
     """
         Pings specified host(s)
     """
+    
+    def doping(host):
+        """
+            Performs actual pinging of a host and returns status
+        """
+        pong = os.system("ping -c 1 -q " + host + " > /dev/null")
+        print("ping:" + host)
+        if pong == 0:
+            print("Host up!")
+            return host + ": Host up!\n"
+        else:
+            print("Host down!")
+            return host + ": Host down!\n"
+            
     command = command.split(" ")
     if len(command) > 1:
-        #Valid usage
+        #Valid usage (probably)
+        response = ""
         if command[1] == "all":
             #Ping all hosts
-            response = ""
             for host in hosts.sections():
-                hostname = hosts[host]['host_or_ip']
-                pong = os.system("ping -c 1 -q " + hostname + " > /dev/null")
-                print("ping:" + hostname)
-                if pong == 0:
-                    print("Host up!")
-                    response = response + hostname + ": Host up!\n"
-                else:
-                    print("Host down!")
-                    response = response + hostname + ": Host down!\n"
+                target = hosts[host]['host_or_ip']
+                response = response + doping(target)
+        elif command[1] == "host":
+            if len(command) < 3:
+                return "Please specify a host."
+            else:
+                #Ping specific targets from hosts file
+                for i in range(2, len(command)):
+                    host = command[i]
+                    try:
+                        target = hosts[host]['host_or_ip']
+                        response = response + doping(target)
+                    except KeyError:
+                        #Host not in hosts file
+                        response = response + "Host " + host + " not found!\n"
+                    
+                
+            
         else:
             #Wake specified hosts
-            response = ""
             for i in range (1, len(command)):
                 hostname = command[i]
                 pong = os.system("ping -c 1 -q " + hostname + " > /dev/null")
@@ -97,4 +119,5 @@ def ping(command, hosts):
         return response + "Task complete!"
     else:
         #Invalid usage
-        return "No host specified. Us \'ping all\' to ping all hosts"
+        return "No host specified. Use \'ping all\' to ping all hosts or " + \
+               "\'ping host [target(s)]\' to ping hosts from the hosts file"
