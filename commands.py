@@ -22,6 +22,17 @@ def wol(command, hosts):
     """
         Wake specified host(s)
     """
+    def isup(host):
+        """
+            Returns True if host is reachable, else False
+        """
+        pong = os.system("ping -c 1 -q " + host + " > /dev/null")
+        if pong == 0:
+            return True
+        else:
+            return False
+    
+    
     command = command.split(" ")
     response = ""
     success = True
@@ -31,9 +42,13 @@ def wol(command, hosts):
             #Wake all hosts
             for hostname in hosts.sections():
                 if hosts[hostname].getboolean('wol_ready'):
-                    send_magic_packet(hosts[hostname]['mac_address'])
-                    print('wol:', hosts[hostname]['mac_address'])
-                    response = response + "Waking " + hostname + "\n"
+                    if isup(hostname):
+                        response = response + "Host " + hostname + \
+                                              " is already up\n"
+                    else:
+                        send_magic_packet(hosts[hostname]['mac_address'])
+                        print('wol:', hosts[hostname]['mac_address'])
+                        response = response + "Waking " + hostname + "\n"
         else:
             #Wake specified hosts
             for i in range (1, len(command)):
@@ -78,6 +93,7 @@ def ping(command, hosts):
         else:
             print("Host down!")
             return host + ": Host not reachable!\n"
+            
             
     command = command.split(" ")
     if len(command) > 1:
