@@ -74,10 +74,10 @@ def ping(command, hosts):
         print("ping:" + host)
         if pong == 0:
             print("Host up!")
-            return host + ": Host up!\n"
+            return host + ": Host reachable!\n"
         else:
             print("Host down!")
-            return host + ": Host down!\n"
+            return host + ": Host not reachable!\n"
             
     command = command.split(" ")
     if len(command) > 1:
@@ -101,21 +101,11 @@ def ping(command, hosts):
                     except KeyError:
                         #Host not in hosts file
                         response = response + "Host " + host + " not found!\n"
-                    
-                
-            
         else:
-            #Wake specified hosts
+            #Wake specified targets
             for i in range (1, len(command)):
-                hostname = command[i]
-                pong = os.system("ping -c 1 -q " + hostname + " > /dev/null")
-                print("ping:" + hostname)
-                if pong == 0:
-                    print("Host up!")
-                    response = response + hostname + ": Host up!\n"
-                else:
-                    print("Host down!")
-                    response = response + hostname + ": Host down!\n"
+                target = command[i]
+                response = response + doping(target)
         return response + "Task complete!"
     else:
         #Invalid usage
