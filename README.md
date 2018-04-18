@@ -1,4 +1,6 @@
 # Homelab Helper
+https://travis-ci.org/reschouw/HomelabHelper.svg?branch=master
+----------
 #### A modular homelab helper integrated with Slack
 
 This project is designed to help manage homelabs from outside of home networks. It will change forms as I work on it and hopefully in the end it will be a useful piece of software.

@@ -9,7 +9,8 @@ import time
 from slackint import Slack_Bot
 from confreader import *
 
-
+def test_hello():
+    print("Hello World!")
 
 # Main entry point
 if __name__ == "__main__":
