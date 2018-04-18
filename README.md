@@ -1,5 +1,5 @@
 # Homelab Helper
-https://travis-ci.org/reschouw/HomelabHelper.svg?branch=master
+[![Build Status](https://travis-ci.org/reschouw/HomelabHelper.svg?branch=master.png)](https://travis-ci.org/reschouw/HomelabHelper.svg?branch=master.png)
 ----------
 #### A modular homelab helper integrated with Slack
 
