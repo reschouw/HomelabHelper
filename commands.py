@@ -17,7 +17,7 @@ def help():
            "       - help: list available commands\n" + \
            "       - wol [host]: wake up all or specifies host\n" + \
            "       - ping [host]: ping specified host and return response\n" + \
-           "       - info [option]: retreive specified information" + \
+           "       - info [option]: retreive specified information\n" + \
            "Type the name of a command to see more specific usage info"
            
 def wol(command, hosts): 
