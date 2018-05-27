@@ -5,6 +5,7 @@
 # https://github.com/reschouw/HomelabHelper
 
 import os
+import urllib.request
 
 from wakeonlan import send_magic_packet
 
@@ -16,6 +17,7 @@ def help():
            "       - help: list available commands\n" + \
            "       - wol [host]: wake up all or specifies host\n" + \
            "       - ping [host]: ping specified host and return response\n" + \
+           "       - info [option]: retreive specified information" + \
            "Type the name of a command to see more specific usage info"
            
 def wol(command, hosts): 
@@ -128,3 +130,25 @@ def ping(command, hosts):
         #Invalid usage
         return "No host specified. Use \'ping all\' to ping all hosts or " + \
                "\'ping host [target(s)]\' to ping hosts from the hosts file"
+
+def info(command, hosts):
+    """
+        Returns external IP using https://ident.me
+    """
+    command = command.split(" ")
+    if len(command) == 2:
+        #Valid usage
+        ext_ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
+        return "Your external IP is: " + ext_ip
+    else:
+        #No options given
+        return "No option specified. Available options: \n" + \
+               "    - \'ip\' : return public IP address"
+    
+        
+    
+    
+    
+    
+    
+    

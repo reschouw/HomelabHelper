@@ -87,6 +87,8 @@ class Slack_Bot:
             response = wol(command, self.hosts)
         elif command.startswith('ping'):
             response = ping(command, self.hosts)
+        elif command.startswith('info'):
+            response = info(command, self.hosts)
 
         # Sends the response back to the channel
         self.slack_client.api_call(
