@@ -138,8 +138,11 @@ def info(command, hosts):
     command = command.split(" ")
     if len(command) == 2:
         #Valid usage
-        ext_ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
-        return "Your external IP is: " + ext_ip
+        if command[1] == "ip":
+            ext_ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
+            return "Your external IP is " + ext_ip
+        else:
+            return "Unknown option."
     else:
         #No options given
         return "No option specified. Available options: \n" + \
