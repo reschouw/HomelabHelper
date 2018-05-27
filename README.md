@@ -13,6 +13,7 @@ The general idea is to have a low-power device (A Raspberry Pi perhaps?) inside 
 - [X] Configuration files
 - [X] Wol Module
 - [X] Ping Module
+- [X] Info Module
 - [ ] Wake Module
 - [ ] Queue Module
 - [ ] Run as Daemon or system service
