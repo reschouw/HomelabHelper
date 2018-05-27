@@ -136,8 +136,8 @@ def info(command, hosts):
         Returns external IP using https://ident.me
     """
     command = command.split(" ")
-    if len(command) == 2:
-        #Valid usage
+    if len(command) > 1:
+        #Valid usage (probably)
         if command[1] == "ip":
             ext_ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
             return "Your external IP is " + ext_ip
@@ -148,13 +148,23 @@ def info(command, hosts):
                     continue
                 response = response + "    - " + host + "\n"
             return response
+        elif command[1] == "host" and len(command) < 4:
+            try:
+                host = hosts[command[2]]
+            except:
+                return "Unknown host!"
+            response = "Config information for " + command[2] + ":\n"
+            for line in host:
+                response = response + "    " + line + " : " + host[line] + "\n"
+            return response
         else:
             return "Unknown option."
     else:
         #No options given
         return "No option specified. Available options: \n" + \
                "    - ip : return public IP address\n" + \
-               "    - hosts : list configured hosts"
+               "    - hosts : list configured hosts\n" + \
+               "    - host [hostname] : list info about configured host"
     
         
     
