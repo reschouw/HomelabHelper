@@ -141,12 +141,20 @@ def info(command, hosts):
         if command[1] == "ip":
             ext_ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
             return "Your external IP is " + ext_ip
+        elif command[1] == "hosts":
+            response = "Available hosts:\n"
+            for host in hosts:
+                if host == "DEFAULT":
+                    continue
+                response = response + "    - " + host + "\n"
+            return response
         else:
             return "Unknown option."
     else:
         #No options given
         return "No option specified. Available options: \n" + \
-               "    - \'ip\' : return public IP address"
+               "    - ip : return public IP address\n" + \
+               "    - hosts : list configured hosts"
     
         
     
