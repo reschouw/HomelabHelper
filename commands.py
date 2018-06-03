@@ -122,18 +122,26 @@ def ping(command, hosts):
                     except KeyError:
                         #Host not in hosts file
                         response = response + "Host \'" + host + "\' not found.\n"
-        else:
-            #Wake specified targets
-            for i in range (1, len(command)):
-                target = command[i]
+        elif command[1] == "other":
+            #Check for links. Slack will wrap them and 
+            if "|" in command[2]:
+                print ("Link detected!")
+                target = command[2][command[2].find("|")+1:command[2].rfind(">")]
+                print (target)
                 response = response + doping(target)
+            else:
+                response = response + doping(command[2])
+        else:
+            #No valid option specified
+            response = response + "Invalid option. Type \'ping\' for available options.\n"
         return response + "Task complete."
     else:
         #Return usage
         return "Usage: \n" + \
                "    \'ping all\' to ping all hosts\n" + \
                "    \'ping host [host1 host 2 ...]\' to ping specific" + \
-                                 "hosts from the hosts file"
+                                 "hosts from the hosts file\n" + \
+               "    \'ping other [host]\' Ping a host/url/IP address not in hosts file."
 
 def info(command, hosts):
     """
