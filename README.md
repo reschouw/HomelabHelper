@@ -30,13 +30,16 @@ Installation:
 To install, start by cloning this repository [https://github.com/reschouw/HomelabHelper](https://github.com/reschouw/HomelabHelper)
 
 Then, in the cloned repository, run the following command to install dependencies.
-```pip3 install -r requirements.txt```
+
+`pip3 install -r requirements.txt`
 
 You can then start the bot using.
-```python3 homelabhelper.py```
+
+`python3 homelabhelper.py`
 
 This will start the bot in the foreground and any diagnostic messages will print to the terminal.
 The first time the program is run, it will create example config and hosts files. Edit these to your satisfaction, rename them to `config` and `hosts` and start the bot again.
 
 Automatically running the bot as a system service is a planned feature, but until then you can use the following command to run the bot in the background even if you close the terminal window.
-```nohup python3 homelabhelper.py &```
+
+`nohup python3 homelabhelper.py &`
