@@ -9,7 +9,7 @@ This project is a small Slack bot designed to run on a Raspberry Pi inside a hom
 Version 0.1.0 will be the first "stable" version. From there I hope to implement some CI practices and work to make this a more robust, feature-rich project. 
 
 ###Currently available features are as follows:
-Can`t remember the MAC of one of your servers? Pull that information from the bot`s host inventory file.
+Can`t remember the MAC of one of your servers? Pull that information from the bot's host inventory file.
 Use Wake-On-LAN  commands to wake specified hosts, or by using "wol all", wake all WOL-capable hosts.
 Ping specified hosts that may not be accessible from outside your network.
 
@@ -29,14 +29,14 @@ Installation:
 
 To install, start by cloning this repository [https://github.com/reschouw/HomelabHelper](https://github.com/reschouw/HomelabHelper)
 
-Then, in the cloned repository, run the following command to install dependencies:
+Then, in the cloned repository, run the following command to install dependencies.
 ```pip3 install -r requirements.txt```
 
-You can then start the bot using:
+You can then start the bot using.
 ```python3 homelabhelper.py```
 
 This will start the bot in the foreground and any diagnostic messages will print to the terminal.
 The first time the program is run, it will create example config and hosts files. Edit these to your satisfaction, rename them to `config` and `hosts` and start the bot again.
 
-Automatically running the bot as a system service is a planned feature, but until then you can use the following command to run the bot in the background even if you close the terminal window:
+Automatically running the bot as a system service is a planned feature, but until then you can use the following command to run the bot in the background even if you close the terminal window.
 ```nohup python3 homelabhelper.py &```
