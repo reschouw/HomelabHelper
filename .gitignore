@@ -1,3 +1,11 @@
 #Config files
-example.cfg
+exampleconfig
+examplehosts
 hosts
+config
+
+#Development virtualenv
+helper/*
+
+#pycache
+__pycache__/*
