@@ -25,11 +25,23 @@ Ping specified hosts that may not be accessible from outside your network.
 
 #### Installation:
 
-To install, start by cloning this repository. [https://github.com/reschouw/HomelabHelper](https://github.com/reschouw/HomelabHelper)
+To install, start by cloning [the repository](https://github.com/reschouw/HomelabHelper)
 
-Then, in the cloned repository, run the following command to install dependencies.
+You will likely want to install `virtualenv` in order to keep your python dependencies from interfering with one another. After installing via 
 
-`pip3 install -r requirements.txt`
+`apt install virtualenv`
+
+(or your respective package manager), run the following:
+
+`virtualenv helper`
+
+"helper is simply the name of the virtual environment. To reactivate the environment, do the following from the project directory:
+
+`source ./helper/bin/activate`
+
+Run the following command to install dependencies.
+
+`python -m pip install -r requirements.txt`
 
 You can then start the bot by running:
 
@@ -37,6 +49,8 @@ You can then start the bot by running:
 
 This will start the bot in the foreground and any diagnostic messages will print to the terminal.
 The first time the program is run, it will create example config and hosts files. Edit these to your satisfaction, rename them to `config` and `hosts` and start the bot again.
+
+In the `config` file, there is a commented-out line for `bot_token`. This is the key that will allow the bot into your Slack workspace. Find instructions for creating a bot user [here](https://get.slack.help/hc/en-us/articles/115005265703-Create-a-bot-for-your-workspace). After creating the bot, paste the API token that starts with "-xoxb" into this configuration option.
 
 Automatically running the bot as a system service is a planned feature, but until then you can use the following command to run the bot in the background even if you close the terminal window.
 
