@@ -16,7 +16,7 @@ def help():
     return "List of available commands:\n" + \
            "       - help: list available commands\n" + \
            "       - wol [host]: wake up all or specifies host\n" + \
-           "       - ping [host]: ping specified host and return response\n" + \
+           "       - ping [host|other] [host/url/IP]: ping and return response\n" + \
            "       - info [option]: retreive specified information\n" + \
            "Type the name of a command to see more specific usage info"
            
@@ -123,14 +123,18 @@ def ping(command, hosts):
                         #Host not in hosts file
                         response = response + "Host \'" + host + "\' not found.\n"
         elif command[1] == "other":
-            #Check for links. Slack will wrap them and 
-            if "|" in command[2]:
-                print ("Link detected!")
-                target = command[2][command[2].find("|")+1:command[2].rfind(">")]
-                print (target)
-                response = response + doping(target)
-            else:
-                response = response + doping(command[2])
+            if len(command) < 3:
+                return "Please specify a host/url/IP."
+            for i in range (2, len(command)):
+                #Check for links. Slack will wrap them and 
+                if "|" in command[i]:
+                    print ("Link detected!")
+                    link = command[i]
+                    target = link[link.find("|")+1:link.rfind(">")]
+                    print (target)
+                    response = response + doping(target)
+                else:
+                    response = response + doping(command[i])
         else:
             #No valid option specified
             response = response + "Invalid option. Type \'ping\' for available options.\n"
@@ -141,7 +145,7 @@ def ping(command, hosts):
                "    \'ping all\' to ping all hosts\n" + \
                "    \'ping host [host1 host 2 ...]\' to ping specific" + \
                                  "hosts from the hosts file\n" + \
-               "    \'ping other [host]\' Ping a host/url/IP address not in hosts file."
+               "    \'ping other [host1 host 2 ...]\' Ping hosts/urls/IP addresses not in hosts file."
 
 def info(command, hosts):
     """
