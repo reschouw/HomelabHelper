@@ -1,5 +1,4 @@
 # Homelab Helper
-----------
 #### A modular homelab helper integrated with Slack
 
 This project is designed to help manage homelabs from outside of home networks. It will change forms as I work on it and hopefully in the end it will be a useful piece of software.
@@ -8,7 +7,7 @@ This project is a small Slack bot designed to run on a Raspberry Pi inside a hom
 
 Version 0.1.0 will be the first "stable" version. From there I hope to implement some CI practices and work to make this a more robust, feature-rich project. 
 
-###Currently available features are as follows:
+####Currently available features are as follows:
 Can`t remember the MAC of one of your servers? Pull that information from the bot's host inventory file.
 Use Wake-On-LAN  commands to wake specified hosts, or by using "wol all", wake all WOL-capable hosts.
 Ping specified hosts that may not be accessible from outside your network.
@@ -25,7 +24,7 @@ Ping specified hosts that may not be accessible from outside your network.
 - [ ] Host Inventory Labels
 - [ ] Run as Daemon or system service
 
-Installation:
+####Installation:
 
 To install, start by cloning this repository [https://github.com/reschouw/HomelabHelper](https://github.com/reschouw/HomelabHelper)
 
@@ -33,7 +32,7 @@ Then, in the cloned repository, run the following command to install dependencie
 
 `pip3 install -r requirements.txt`
 
-You can then start the bot using.
+You can then start the bot by running:
 
 `python3 homelabhelper.py`
 
