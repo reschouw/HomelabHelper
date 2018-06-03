@@ -12,11 +12,22 @@ from confreader import *
 
 # Main entry point
 if __name__ == "__main__":
-    print("Homelab Helper starting...")
+
+    #GNU GENERAL PUBLIC LICENSE    
+    print("Copyright (C) 2018  Ryan Schouweiler\n")
     
-    print("Copyright (C) 2018  Ryan Schouweiler")
+    print("This program is free software: you can redistribute it and/or modify it \n" + \
+          "under the terms of the GNU General Public License as published by \n" + \
+          "the Free Software Foundation, either version 3 of the License, or \n" + \
+          "at your option) any later version.\n")
+
+    print("This program is distributed in the hope that it will be useful,\n" + \
+          "but WITHOUT ANY WARRANTY; without even the implied warranty of\n" + \
+          "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n" + \
+          "GNU General Public License for more details.\n\n")
     
-    print("This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.")
+    #Start of program
+    print("Homelab helper starting...")
 
     #Open and verify config files
     config, hosts = openConfigs()
