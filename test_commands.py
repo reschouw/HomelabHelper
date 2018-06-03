@@ -5,4 +5,4 @@
 # https://github.com/reschouw/HomelabHelper
 
 def test_example():
-    print "Hello World!"
+    print ("Hello World!")
