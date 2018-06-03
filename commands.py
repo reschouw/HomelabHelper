@@ -76,8 +76,10 @@ def wol(command, hosts):
             return response + "Not all hosts wol ready or were not known.\n" + \
                               "Check your host file or your capitalization."
     else:
-        #Invalid usage
-        return "No host specified. Use \'wol all\' to wake all hosts."
+        #Return usage
+        return "Usage:\n" + \
+               "    \'wol [host1 host2 ...]' to wake specified host(s)\n" + \
+               "    \'wol all\' will wake all WOL capable hosts"
 
 def ping(command, hosts):
     """
@@ -127,9 +129,11 @@ def ping(command, hosts):
                 response = response + doping(target)
         return response + "Task complete."
     else:
-        #Invalid usage
-        return "No host specified. Use \'ping all\' to ping all hosts or " + \
-               "\'ping host [target(s)]\' to ping hosts from the hosts file"
+        #Return usage
+        return "Usage: \n" + \
+               "    \'ping all\' to ping all hosts\n" + \
+               "    \'ping host [host1 host 2 ...]\' to ping specific" + \
+                                 "hosts from the hosts file"
 
 def info(command, hosts):
     """
@@ -160,11 +164,11 @@ def info(command, hosts):
         else:
             return "Unknown option."
     else:
-        #No options given
-        return "No option specified. Available options: \n" + \
-               "    - ip : return public IP address\n" + \
-               "    - hosts : list configured hosts\n" + \
-               "    - host [hostname] : list info about configured host"
+        #Return usage
+        return "Usage: \n" + \
+               "    info ip : return public IP address\n" + \
+               "    info hosts : list configured hosts\n" + \
+               "    info host [hostname] : list info about configured host"
     
         
     
