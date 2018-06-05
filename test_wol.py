@@ -1,5 +1,5 @@
 # Homelab Helper
-# Testing module for bot commands
+# Testing module for wol command
 # Ryan Schouweiler
 # A modular homelab helper
 # https://github.com/reschouw/HomelabHelper
@@ -23,10 +23,6 @@ class test_commands(unittest.TestCase):
     hosts['host2'] = {'wol_ready' : True,  'mac_address' : '22:22:22:22:22:22'}
     hosts['host3'] = {'wol_ready' : False, 'mac_address' : '33:33:33:33:33:33'}
     hosts['host4'] = {'wol_ready' : True,  'mac_address' : '44:44:44:44:44:44'}
- 
-
-    def test_help(self):
-        return isinstance(help(), str)
     
     def test_wol_none(self):
         with patch('commands.send_magic_packet') as mock_send_magic_packet:
