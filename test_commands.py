@@ -11,6 +11,7 @@ import slack_commands
 from slack_commands import *
 
 
+
 class test_commands(unittest.TestCase):
     hosts = {
              'host1' : {'wol_ready' : True,  'mac_address' : '11:11:11:11:11:11'},
@@ -27,8 +28,8 @@ class test_commands(unittest.TestCase):
         return isinstance(help(), str)
 
     def test_wol_all(self):
-        with patch('slack_commands.wakeonlan.send_magic_packet') as mock_send_magic_packet:
-            wol(["wol", "all"], self.hosts)
+        with patch('wakeonlan.send_magic_packet') as mock_send_magic_packet:
+            wol("wol all", self.hosts)
             assertEqual(mock_send_magic_packet, 3)
         
         
