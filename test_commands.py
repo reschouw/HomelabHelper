@@ -12,7 +12,7 @@ from unittest.mock import patch
 import configparser
 
 #Modules to be tested
-from slack_commands import *
+from commands import *
 
 
 
@@ -32,7 +32,7 @@ class test_commands(unittest.TestCase):
         return isinstance(help(), str)
 
     def test_wol_all(self):
-        with patch('slack_commands.send_magic_packet') as mock_send_magic_packet:
+        with patch('commands.send_magic_packet') as mock_send_magic_packet:
             with patch('os.system', return_value=1) as mock_system:
                 wol("wol all", self.hosts)
                 self.assertEqual(mock_system.call_count, 3)
