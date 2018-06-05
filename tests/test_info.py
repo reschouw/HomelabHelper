@@ -20,3 +20,12 @@ class test_wol(unittest.TestCase):
 
     def test_info_none(self):
         pass
+    
+    def test_info_ip(self):
+        pass
+        
+    def test_info_hosts(self):
+        pass
+    
+    def test_info_host(self):
+        pass
