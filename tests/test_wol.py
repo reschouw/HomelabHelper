@@ -16,7 +16,7 @@ from commands import wol
 
 
 
-class test_commands(unittest.TestCase):
+class test_wol(unittest.TestCase):
     
     hosts = configparser.ConfigParser()
     hosts['host1'] = {'wol_ready' : True,  'mac_address' : '11:11:11:11:11:11'}

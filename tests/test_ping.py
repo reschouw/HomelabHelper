@@ -16,7 +16,7 @@ from commands import ping
 
 
 
-class test_help(unittest.TestCase):
+class test_ping(unittest.TestCase):
     
     hosts = configparser.ConfigParser()
     hosts['host1'] = {'host_or_ip' : '1.1.1.1'}
