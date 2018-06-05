@@ -8,7 +8,7 @@
 import re
 from slackclient import SlackClient
 
-from commands import *
+from slack_commands import *
 
 
 
