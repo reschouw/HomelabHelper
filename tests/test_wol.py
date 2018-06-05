@@ -12,7 +12,7 @@ from unittest.mock import patch
 import configparser
 
 #Modules to be tested
-from commands import *
+from commands import wol
 
 
 

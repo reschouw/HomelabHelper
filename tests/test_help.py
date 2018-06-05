@@ -8,7 +8,7 @@
 import unittest
 
 #Modules to be tested
-from commands import *
+from commands import help
 
 
 
