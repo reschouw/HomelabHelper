@@ -7,8 +7,14 @@ config
 #Development virtualenv
 helper/*
 
+#Compiled python files
+*.pyc
+
 #pycache
-__pycache__/*
+__pycache__/
+tests/__pycache__/
+
+#pytest cache
 .pytest_cache/*
 
 #nohup file
