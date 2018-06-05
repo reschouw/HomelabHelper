@@ -11,8 +11,7 @@ helper/*
 *.pyc
 
 #pycache
-__pycache__/
-tests/__pycache__/
+**/__pycache__/
 
 #pytest cache
 .pytest_cache/*
