@@ -10,3 +10,6 @@ helper/*
 #pycache
 __pycache__/*
 .pytest_cache/*
+
+#nohup file
+nohup.out
