@@ -149,14 +149,17 @@ def ping(command, hosts):
 
 def info(command, hosts):
     """
-        Returns external IP using https://ident.me
+        Returns config info, hosts info, or external IP using https://ident.me
     """
     command = command.split(" ")
     if len(command) > 1:
         #Valid usage (probably)
         if command[1] == "ip":
-            ext_ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
-            return "Your external IP is " + ext_ip
+            try:
+                ext_ip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
+                return "Your external IP is " + ext_ip
+            except:
+                return "Unable to retreive public IP address. Check your internet connection."
         elif command[1] == "hosts":
             response = "Available hosts:\n"
             for host in hosts:
