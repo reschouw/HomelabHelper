@@ -1,8 +1,9 @@
 # Homelab Helper
-![alt text](https://img.shields.io/badge/Version-v0.1.0-blue.svg)
+![alt text](https://img.shields.io/badge/Version-v0.1.1-blue.svg)
 
-[![Build Status](https://travis-ci.org/reschouw/HomelabHelper.svg?branch=master)](https://travis-ci.org/reschouw/HomelabHelper)
+[![Build Status](https://travis-ci.org/reschouw/HomelabHelper.svg?branch=master)](https://travis-ci.org/reschouw/HomelabHelper) - Master Branch
 
+[![Build Status](https://travis-ci.org/reschouw/HomelabHelper.svg?branch=dev)](https://travis-ci.org/reschouw/HomelabHelper) - Development branch
 #### A modular homelab helper integrated with Slack
 
 
