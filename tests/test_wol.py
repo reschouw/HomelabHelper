@@ -24,18 +24,21 @@ class test_wol(unittest.TestCase):
     hosts['host3'] = {'wol_ready' : False, 'mac_address' : '33:33:33:33:33:33'}
     hosts['host4'] = {'wol_ready' : True,  'mac_address' : '44:44:44:44:44:44'}
     
+    config = configparser.ConfigParser()
+    config['WOL Module'] = {'awake_check' : 'no'}
+    
     def test_wol_none(self):
         with patch('commands.send_magic_packet') as mock_send_magic_packet:
-            response = wol("wol", self.hosts)
+            response = wol("wol", self.hosts, self.config)
             self.assertEqual(mock_send_magic_packet.call_count, 0)
             self.assertIs(type(response), str)
             
     
     def test_wol_single(self):
         with patch('commands.send_magic_packet') as mock_send_magic_packet:
-            response = wol("wol host2", self.hosts)
+            response = wol("wol host2", self.hosts, self.config)
             self.assertIs(type(response), str)
-            response = wol("wol host3", self.hosts)
+            response = wol("wol host3", self.hosts, self.config)
             self.assertIs(type(response), str)
             self.assertEqual(mock_send_magic_packet.call_count, 1)
             self.assertEqual(mock_send_magic_packet.call_args,
@@ -44,7 +47,7 @@ class test_wol(unittest.TestCase):
             
     def test_wol_multiple(self):
         with patch('commands.send_magic_packet') as mock_send_magic_packet:
-            response = wol("wol host1 host3 host4", self.hosts)
+            response = wol("wol host1 host3 host4", self.hosts, self.config)
             self.assertIs(type(response), str)
             self.assertEqual(mock_send_magic_packet.call_count, 2)
             expected = [(('11:11:11:11:11:11',),),
@@ -55,7 +58,7 @@ class test_wol(unittest.TestCase):
     def test_wol_all(self):
         with patch('commands.send_magic_packet') as mock_send_magic_packet:
             with patch('os.system', return_value=1) as mock_system:
-                wol("wol all", self.hosts)
+                wol("wol all", self.hosts, self.config)
                 self.assertEqual(mock_system.call_count, 3)
                 self.assertEqual(mock_send_magic_packet.call_count, 3)
         

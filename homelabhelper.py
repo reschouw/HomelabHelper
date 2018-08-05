@@ -40,11 +40,13 @@ if __name__ == "__main__":
     if 'bot_token' in config['Slack Integration']:
         slack_bot = Slack_Bot(config['Slack Integration']['bot_token'],
                               require_mention,
-                              hosts)
+                              hosts,
+                              config)
     else:
         slack_bot = Slack_Bot(os.environ.get('SLACK_BOT_TOKEN'),
                                              require_mention,
-                                             hosts)
+                                             hosts,
+                                             config)
     if slack_bot.connect():
         print("Homelab Helper Bot connected and running!")
         while True:

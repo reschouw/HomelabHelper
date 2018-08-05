@@ -9,10 +9,11 @@ import configparser
 
 def createExConfig(config):
     """Creates example config file"""
-    #config['Module1'] = {'Active' : 'yes'}
     config['Slack Integration'] = {'require_mention' : 'yes',
                                    'refresh_rate' : '0.3',
                                    '#bot_token' : ''}
+    config['WOL Module'] = {'check_awake' : 'no'}
+    
     with open('exampleconfig', 'w') as configfile:
         config.write(configfile)
     print('Please rename the \'exampleconfig\' file to \'config\' after reviewing settings')
@@ -51,9 +52,11 @@ def verifyConfigs(config, hosts):
     print("Verifying config file...")
     verified = True
     try:
-        config['Slack Integration'].getfloat('refresh_rate')
         config['Slack Integration'].getboolean('require_mention')
+        config['Slack Integration'].getfloat('refresh_rate')
         config['Slack Integration']['bot_token']
+        
+        config['WOL Module'].getboolean('check_awake')
     except KeyError:
         verified = False
     except ValueError:

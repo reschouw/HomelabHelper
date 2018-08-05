@@ -14,7 +14,7 @@ from commands import *
 
 class Slack_Bot:
     
-    def __init__(self, bot_token, require_mention, hosts):
+    def __init__(self, bot_token, require_mention, hosts, config):
         """
             Creates slack client with given bot token and settings
         """
@@ -22,6 +22,7 @@ class Slack_Bot:
         self.bot_id = None
         self.require_mention = require_mention
         self.hosts = hosts
+        self.config = config
         
             
     def connect(self):
@@ -84,7 +85,7 @@ class Slack_Bot:
         if command.startswith('help'):
             response = help()
         elif command.startswith('wol'):
-            response = wol(command, self.hosts)
+            response = wol(command, self.hosts, self.config)
         elif command.startswith('ping'):
             response = ping(command, self.hosts)
         elif command.startswith('info'):

@@ -20,7 +20,7 @@ def help():
            "       - info [option]: retreive specified information\n" + \
            "Type the name of a command to see more specific usage info"
            
-def wol(command, hosts): 
+def wol(command, hosts, config): 
     """
         Wake specified host(s)
     """
@@ -44,7 +44,8 @@ def wol(command, hosts):
             #Wake all hosts
             for hostname in hosts.sections():
                 if hosts[hostname].getboolean('wol_ready'):
-                    if isup(hostname):
+                    #optional check for if host is already awake
+                    if isup(hostname) and config['WOL Module'].getboolean('check_awake'):
                         response = response + "Host \'" + hostname + \
                                               "\' is already up.\n"
                     else:
