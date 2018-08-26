@@ -40,3 +40,4 @@ class test_wol(unittest.TestCase):
         response = info("info host MiniVerse", self.hosts)
         self.assertIs(type(response), str)
         response = info("info host host1", self.hosts)
+        self.assertIs(type(response), str)
